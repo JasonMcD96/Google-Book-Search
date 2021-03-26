@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Input, TextArea, FormBtn } from "../components/Form";
-import DeleteBtn from "../components/DeleteBtn";
+import React, { useState} from "react";
+import { Input, FormBtn } from "../components/Form";
 import Jumbotron from "../components/Jumbotron";
-import API from "../utils/API";
-import { Link } from "react-router-dom";
+import GoogleAPI from "../utils/GoogleAPI"
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
+import SaveButton from "../components/SaveBtn"
+import API from "../utils/API" 
+
 
 
 function Search() {
@@ -24,51 +25,65 @@ function Search() {
     // Then reload books from the database
     function handleFormSubmit(event) {
         event.preventDefault();
-        // if (formObject.title && formObject.author) {
-        //     API.saveBook({
-        //         title: formObject.title,
-        //         author: formObject.author,
-        //         synopsis: formObject.synopsis
-        //     })
-        //         .then(res => loadBooks())
-        //         .catch(err => console.log(err));
-        // }
-
-        console.log(formObject.whatever)
-
+        GoogleAPI.searchGoogle(formObject.searchTerm)
+            .then(res => {
+                setBooks(res.data.items)
+                console.log(res.data.items)
+            })
+            .catch(error => {
+                console.log(error.response)
+            })
     };
 
-
+    function saveBook(title, description) {
+        console.log("Trying to save: ", title)
+        console.log("Description: ", description)
+    }
 
     return (<div>
-        <Col size="md-6">
-            <Jumbotron>
-              <h1>What Books Should I Read?</h1>
-            </Jumbotron>
-            <form>
-              <Input
-                onChange={handleInputChange}
-                name="whatever"
-                placeholder="Title (required)"
-              />
-              <Input
-                onChange={handleInputChange}
-                name="author"
-                placeholder="Author (required)"
-              />
-              <TextArea
-                onChange={handleInputChange}
-                name="synopsis"
-                placeholder="Synopsis (Optional)"
-              />
-              <FormBtn
-                // disabled={!(formObject.author && formObject.title)}
-                onClick={handleFormSubmit}
-              >
-                Submit Book
+        <Container fluid>
+            <Row>
+                <Col size="md-4">
+                    <Jumbotron>
+                        <h1>What Books Should I Read?</h1>
+                    </Jumbotron>
+                    <form>
+                        <Input
+                            onChange={handleInputChange}
+                            name="searchTerm"
+                            placeholder="Keyword(s)"
+                        />
+                        <FormBtn
+                            disabled={!(formObject.searchTerm)}
+                            onClick={handleFormSubmit}
+                        >
+                            Search
               </FormBtn>
-            </form>
-          </Col>
+                    </form>
+                </Col>
+                <Col size="md-8 sm-12">
+                    <Jumbotron>
+                        <h1>Results</h1>
+                    </Jumbotron>
+                    {books.length ? (
+                        <List>
+                            {books.map(book => (
+                                <ListItem>
+                                    <strong>
+                                        <img src={book.volumeInfo.imageLinks.thumbnail} alt="search result"></img>
+                                        {book.volumeInfo.title} by  <span id="authorList">{book.volumeInfo.authors}</span>
+                                    </strong>
+                                    <SaveButton onClick={() => saveBook(book.volumeInfo.title, book.volumeInfo.description)} />
+                                </ListItem>
+                            ))}
+                        </List>
+                    ) : (
+                        <h3>No Results to Display</h3>
+                    )}
+                </Col>
+
+            </Row>
+        </Container>
     </div>)
 }
 
