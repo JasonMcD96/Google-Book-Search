@@ -40,10 +40,11 @@ function Search() {
         console.log("Author: ", author)
         console.log("Description: ", description)
 
-        let checkedAuthor = author
-
+        let checkedAuthor
         if(author == null){
             checkedAuthor = "Unlisted"
+        } else {
+            checkedAuthor = author[0]
         }
 
         API.saveBook({
