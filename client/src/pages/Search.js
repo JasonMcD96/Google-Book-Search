@@ -35,9 +35,17 @@ function Search() {
             })
     };
 
-    function saveBook(title, description) {
-        console.log("Trying to save: ", title)
+    function saveBook(title, description, author) {
+        console.log("Title: ", title)
+        console.log("Author: ", author)
         console.log("Description: ", description)
+
+        API.saveBook({
+            title: title,
+            author: author,
+            synopsis: description
+        })
+        .catch(err => console.log(err))
     }
 
     return (<div>
@@ -71,9 +79,9 @@ function Search() {
                                 <ListItem>
                                     <strong>
                                         <img src={book.volumeInfo.imageLinks.thumbnail} alt="search result"></img>
-                                        {book.volumeInfo.title} by  <span id="authorList">{book.volumeInfo.authors}</span>
+                                        {book.volumeInfo.title} by  <span id="authorList">{book.volumeInfo.authors[0]}</span>
                                     </strong>
-                                    <SaveButton onClick={() => saveBook(book.volumeInfo.title, book.volumeInfo.description)} />
+                                    <SaveButton onClick={() => saveBook(book.volumeInfo.title, book.volumeInfo.description, book.volumeInfo.authors[0])} />
                                 </ListItem>
                             ))}
                         </List>
