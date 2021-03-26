@@ -40,9 +40,15 @@ function Search() {
         console.log("Author: ", author)
         console.log("Description: ", description)
 
+        let checkedAuthor = author
+
+        if(author == null){
+            checkedAuthor = "Unlisted"
+        }
+
         API.saveBook({
             title: title,
-            author: author,
+            author: checkedAuthor,
             synopsis: description
         })
         .catch(err => console.log(err))
@@ -79,9 +85,9 @@ function Search() {
                                 <ListItem>
                                     <strong>
                                         <img src={book.volumeInfo.imageLinks.thumbnail} alt="search result"></img>
-                                        {book.volumeInfo.title} by  <span id="authorList">{book.volumeInfo.authors[0]}</span>
+                                        {book.volumeInfo.title} by  <span id="authorList">{book.volumeInfo.authors}</span>
                                     </strong>
-                                    <SaveButton onClick={() => saveBook(book.volumeInfo.title, book.volumeInfo.description, book.volumeInfo.authors[0])} />
+                                    <SaveButton onClick={() => saveBook(book.volumeInfo.title, book.volumeInfo.description, book.volumeInfo.authors)} />
                                 </ListItem>
                             ))}
                         </List>
