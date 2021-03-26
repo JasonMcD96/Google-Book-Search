@@ -35,10 +35,8 @@ function Search() {
             })
     };
 
-    function saveBook(title, description, author) {
-        console.log("Title: ", title)
-        console.log("Author: ", author)
-        console.log("Description: ", description)
+    function saveBook(title, description, author, image, link) {
+ 
 
         let checkedAuthor
         if(author == null){
@@ -50,7 +48,9 @@ function Search() {
         API.saveBook({
             title: title,
             author: checkedAuthor,
-            synopsis: description
+            synopsis: description,
+            image: image,
+            link: link
         })
         .catch(err => console.log(err))
     }
@@ -88,7 +88,8 @@ function Search() {
                                         <img src={book.volumeInfo.imageLinks.thumbnail} alt="search result"></img>
                                         {book.volumeInfo.title} by  <span id="authorList">{book.volumeInfo.authors}</span>
                                     </strong>
-                                    <SaveButton onClick={() => saveBook(book.volumeInfo.title, book.volumeInfo.description, book.volumeInfo.authors)} />
+                                    <SaveButton onClick={() => saveBook(book.volumeInfo.title, book.volumeInfo.description, book.volumeInfo.authors, book.volumeInfo.imageLinks.thumbnail, book.volumeInfo.previewLink)} />
+                                    <button onClick={() => window.location.href=book.volumeInfo.previewLink } formTarget="_blank">Link</button>
                                 </ListItem>
                             ))}
                         </List>
