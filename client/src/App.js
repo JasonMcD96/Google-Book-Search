@@ -6,7 +6,7 @@ import Nav from "./components/Nav";
 import Saved from "./pages/Saved";
 import Search from "./pages/Search";
 
-
+console.log(process.env.REACT_APP_GOOGLE_API_KEY)
 
 function App() {
   return (
@@ -16,6 +16,9 @@ function App() {
         <Switch>
           <Route exact path={["/", "/search"]}>
             <Search/>
+          </Route>
+          <Route exact path="/books/:id">
+            <Detail />
           </Route>
           <Route exact path="/saved">
             <Saved/>
