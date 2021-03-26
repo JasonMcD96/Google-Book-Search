@@ -6,6 +6,8 @@ import Nav from "./components/Nav";
 import Saved from "./pages/Saved";
 import Search from "./pages/Search";
 
+
+
 function App() {
   return (
     <Router>
@@ -14,9 +16,6 @@ function App() {
         <Switch>
           <Route exact path={["/", "/search"]}>
             <Search/>
-          </Route>
-          <Route exact path="/books/:id">
-            <Detail />
           </Route>
           <Route exact path="/saved">
             <Saved/>
