@@ -6,6 +6,7 @@ import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import SaveButton from "../components/SaveBtn"
 import API from "../utils/API" 
+import LinkButton from "../components/LinkButton";
 
 
 
@@ -89,7 +90,7 @@ function Search() {
                                         {book.volumeInfo.title} by  <span id="authorList">{book.volumeInfo.authors}</span>
                                     </strong>
                                     <SaveButton onClick={() => saveBook(book.volumeInfo.title, book.volumeInfo.description, book.volumeInfo.authors, book.volumeInfo.imageLinks.thumbnail, book.volumeInfo.previewLink)} />
-                                    <button onClick={() => window.location.href=book.volumeInfo.previewLink } formTarget="_blank">Link</button>
+                                    <LinkButton link={book.volumeInfo.previewLink} />
                                 </ListItem>
                             ))}
                         </List>
