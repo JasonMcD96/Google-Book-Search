@@ -53,6 +53,7 @@ function Search() {
             image: image,
             link: link
         })
+        .then(alert("Saved Successfully!"))
         .catch(err => console.log(err))
     }
 
@@ -61,7 +62,7 @@ function Search() {
             <Row>
                 <Col size="md-4">
                     <Jumbotron>
-                        <h1>What Books Should I Read?</h1>
+                        <h1>What Book Sounds Interesting?</h1>
                     </Jumbotron>
                     <form>
                         <Input
