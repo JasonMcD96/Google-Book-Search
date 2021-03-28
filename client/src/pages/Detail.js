@@ -30,7 +30,7 @@ function Detail(props) {
         <Row>
           <Col size="md-10 md-offset-1">
             <article>
-              <h1>Synopsis</h1>
+              <h1>Summary</h1>
               <p>
                 {book.synopsis}
               </p>
@@ -39,7 +39,7 @@ function Detail(props) {
         </Row>
         <Row>
           <Col size="md-2">
-            <Link to="/">← Back to Authors</Link>
+            <Link to="/Saved">← Back </Link>
           </Col>
         </Row>
       </Container>
